@@ -45,7 +45,7 @@ export function ExportTab({
 
       <div className="pt-4 border-t border-white/10">
         <h3 className="text-white font-medium mb-2">Current Settings</h3>
-        <div className="bg-black/20 rounded-lg p-3 text-xs text-gray-300 font-mono max-h-32 overflow-y-auto scrollbar-thin">
+        <div className="bg-black/20 rounded-lg p-3 text-xs text-gray-300 font-mono max-h-56 overflow-y-auto scrollbar-thin">
           <pre>{JSON.stringify(settings, null, 2)}</pre>
         </div>
       </div>
