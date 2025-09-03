@@ -237,7 +237,7 @@ export default function HeadlineWidget() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="md:text-4xl text-3xl font-bold text-white mb-2">
             Headline Widget Creator
           </h1>
           <p className="text-gray-300">
