@@ -115,12 +115,13 @@ export function AnimatedTextRenderer({
                 "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1",
                 selectedWordIndex === wordIndex
                   ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent bg-blue-500/10"
-                  : "hover:bg-white/10 hover:ring-1 hover:ring-white/30"
+                  : "hover:bg-white/5"
               )}
               style={wordStyles}
-              onClick={() =>
+              onDoubleClick={() =>
                 onWordSelect(selectedWordIndex === wordIndex ? null : wordIndex)
               }
+              title="Double-click to style this word"
             >
               {word.split("").map((letter, letterIndex) => {
                 // Calculate total letters processed so far for proper sequencing
@@ -252,14 +253,15 @@ export function AnimatedTextRenderer({
               "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1",
               selectedWordIndex === index
                 ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent bg-blue-500/10"
-                : "hover:bg-white/10 hover:ring-1 hover:ring-white/30"
+                : "hover:bg-white/5"
             )}
             style={wordStyles}
-            onClick={() =>
+            onDoubleClick={() =>
               onWordSelect(selectedWordIndex === index ? null : index)
             }
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            title="Double-click to style this word"
           >
             {word}
           </motion.span>

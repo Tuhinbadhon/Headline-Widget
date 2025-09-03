@@ -29,7 +29,7 @@ const gradientDirections = {
 
 export default function HeadlineWidget() {
   const [settings, setSettings] = useState<HeadlineSettings>({
-    text: "Welcome To Headline Widget",
+    text: "Create Stunning Headlines",
     fontSize: 48,
     fontFamily: "Inter, sans-serif",
     fontWeight: "700",
