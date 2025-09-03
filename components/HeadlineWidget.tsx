@@ -7,7 +7,7 @@ import type {
   HeadlineSettings,
 } from "@/types";
 import { motion } from "framer-motion";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HeadlinePreview } from "./HeadlinePreview";
 import {
   AnimatedTextRenderer,
@@ -55,7 +55,20 @@ export default function HeadlineWidget() {
     null
   );
   const [exportCopied, setExportCopied] = useState(false);
+  const [animationTimer, setAnimationTimer] = useState<NodeJS.Timeout | null>(
+    null
+  );
+  const [animationKey, setAnimationKey] = useState(0);
   const headlineRef = useRef<HTMLDivElement>(null);
+
+  // Cleanup timer on component unmount
+  useEffect(() => {
+    return () => {
+      if (animationTimer) {
+        clearTimeout(animationTimer);
+      }
+    };
+  }, [animationTimer]);
 
   const updateSettings = (path: string, value: unknown) => {
     setSettings((prev) => {
@@ -182,13 +195,53 @@ export default function HeadlineWidget() {
   };
 
   const handleToggleLetterAnimation = () => {
-    setSettings((prev) => ({
-      ...prev,
-      effects: {
-        ...prev.effects,
-        letterAnimation: !prev.effects.letterAnimation,
-      },
-    }));
+    setSettings((prev) => {
+      const newLetterAnimation = !prev.effects.letterAnimation;
+
+      // If turning on animation, set a timer to automatically turn it off
+      if (newLetterAnimation) {
+        // Increment animation key to restart the animation
+        setAnimationKey((current) => current + 1);
+
+        // Clear any existing timer
+        if (animationTimer) {
+          clearTimeout(animationTimer);
+        }
+
+        // Calculate animation duration based on text length
+        const textLength = prev.text.length;
+        const baseDelay = 0.05; // 0.05s per letter
+        const totalAnimationTime = (textLength * baseDelay + 1) * 1000; // Convert to milliseconds, add 1s buffer
+
+        // Set timer to automatically turn off animation
+        const timer = setTimeout(() => {
+          setSettings((currentSettings) => ({
+            ...currentSettings,
+            effects: {
+              ...currentSettings.effects,
+              letterAnimation: false,
+            },
+          }));
+          setAnimationTimer(null);
+        }, totalAnimationTime);
+
+        setAnimationTimer(timer);
+      } else {
+        // If turning off animation manually, clear the timer
+        if (animationTimer) {
+          clearTimeout(animationTimer);
+          setAnimationTimer(null);
+        }
+      }
+
+      return {
+        ...prev,
+        effects: {
+          ...prev.effects,
+          letterAnimation: newLetterAnimation,
+        },
+      };
+    });
   };
 
   const renderTabContent = () => {
@@ -262,6 +315,7 @@ export default function HeadlineWidget() {
                 selectedWordIndex={selectedWordIndex}
                 onWordSelect={setSelectedWordIndex}
                 getHeadlineStyle={getHeadlineStyle}
+                animationKey={animationKey}
               />
             </HeadlinePreview>
 
