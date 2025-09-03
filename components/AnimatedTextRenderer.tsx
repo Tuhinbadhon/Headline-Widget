@@ -119,7 +119,7 @@ export function AnimatedTextRenderer({
                 "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1 select-none",
                 selectedWordIndex === wordIndex
                   ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent bg-blue-500/10"
-                  : "hover:bg-white/5"
+                  : ""
               )}
               style={wordStyles}
               onClick={() => handleWordInteraction(wordIndex)}
@@ -259,7 +259,7 @@ export function AnimatedTextRenderer({
             )}
             style={wordStyles}
             onClick={() => handleWordInteraction(index)}
-            whileHover={{ scale: 1.01 }}
+            whileHover={{ scale: 1.0 }}
             whileTap={{ scale: 0.99 }}
             title="Tap to style this word"
           >
