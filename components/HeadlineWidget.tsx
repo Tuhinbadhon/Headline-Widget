@@ -29,7 +29,7 @@ const gradientDirections = {
 
 export default function HeadlineWidget() {
   const [settings, setSettings] = useState<HeadlineSettings>({
-    text: "Your Amazing Headline",
+    text: "Wellcome to Headline Widget",
     fontSize: 48,
     fontFamily: "Inter, sans-serif",
     fontWeight: "700",
@@ -210,7 +210,7 @@ export default function HeadlineWidget() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-5">
           {/* Preview Section */}
           <div className="lg:col-span-2">
             <HeadlinePreview
@@ -247,7 +247,7 @@ export default function HeadlineWidget() {
             >
               <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
 
-              <div className="p-6">{renderTabContent()}</div>
+              <div className="p-5">{renderTabContent()}</div>
             </motion.div>
           </div>
         </div>

@@ -17,7 +17,7 @@ const tabs = [
 
 export function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
   return (
-    <div className="flex border-b border-white/10">
+    <div className="flex  scrollbar-thin overflow-auto border-b border-white/10">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         return (
