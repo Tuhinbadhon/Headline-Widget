@@ -7,16 +7,51 @@ interface TypographyTabProps {
 }
 
 const fontFamilies = [
+  // Modern Popular Sans-Serif
   "Inter, sans-serif",
+  "Roboto, sans-serif",
+  "Open Sans, sans-serif",
+  "Poppins, sans-serif",
+  "Lato, sans-serif",
+  "Montserrat, sans-serif",
+  "Source Sans Pro, sans-serif",
+  "Nunito, sans-serif",
+  "Ubuntu, sans-serif",
+  "Raleway, sans-serif",
+
+  // System Fonts
   "system-ui, sans-serif",
+  "-apple-system, BlinkMacSystemFont, sans-serif",
+
+  // Classic Sans-Serif
+  "Helvetica Neue, Helvetica, sans-serif",
   "Arial, sans-serif",
-  "Helvetica, sans-serif",
-  "Georgia, serif",
-  "Times New Roman, serif",
-  "Courier New, monospace",
   "Verdana, sans-serif",
   "Tahoma, sans-serif",
+  "Trebuchet MS, sans-serif",
+
+  // Serif Fonts
+  "Playfair Display, serif",
+  "Merriweather, serif",
+  "Georgia, serif",
+  "Times New Roman, serif",
+  "Crimson Text, serif",
+  "Libre Baskerville, serif",
+
+  // Display & Decorative
+  "Oswald, sans-serif",
+  "Bebas Neue, sans-serif",
+  "Anton, sans-serif",
+  "Righteous, sans-serif",
+  "Fjalla One, sans-serif",
   "Impact, sans-serif",
+
+  // Monospace
+  "JetBrains Mono, monospace",
+  "Fira Code, monospace",
+  "Source Code Pro, monospace",
+  "Courier New, monospace",
+  "Monaco, monospace",
 ];
 
 export function TypographyTab({
