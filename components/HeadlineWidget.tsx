@@ -198,11 +198,11 @@ export default function HeadlineWidget() {
     setSettings((prev) => {
       const newLetterAnimation = !prev.effects.letterAnimation;
 
+      // Always increment animation key to force re-render
+      setAnimationKey((current) => current + 1);
+
       // If turning on animation, set a timer to automatically turn it off
       if (newLetterAnimation) {
-        // Increment animation key to restart the animation
-        setAnimationKey((current) => current + 1);
-
         // Clear any existing timer
         if (animationTimer) {
           clearTimeout(animationTimer);
@@ -210,7 +210,7 @@ export default function HeadlineWidget() {
 
         // Calculate animation duration based on text length
         const textLength = prev.text.length;
-        const baseDelay = 0.05; // 0.05s per letter
+        const baseDelay = 0.03; // Updated to match our new timing
         const totalAnimationTime = (textLength * baseDelay + 1) * 1000; // Convert to milliseconds, add 1s buffer
 
         // Set timer to automatically turn off animation
@@ -222,6 +222,7 @@ export default function HeadlineWidget() {
               letterAnimation: false,
             },
           }));
+          setAnimationKey((current) => current + 1); // Force re-render when auto-stopping
           setAnimationTimer(null);
         }, totalAnimationTime);
 
@@ -308,6 +309,7 @@ export default function HeadlineWidget() {
               onTextChange={(text) => updateSettings("text", text)}
               onResetAnimation={resetAnimation}
               onToggleLetterAnimation={handleToggleLetterAnimation}
+              selectedWordIndex={selectedWordIndex}
             >
               <AnimatedTextRenderer
                 settings={settings}

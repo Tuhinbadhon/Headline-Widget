@@ -12,6 +12,7 @@ interface HeadlinePreviewProps {
   onResetAnimation: () => void;
   onToggleLetterAnimation: () => void;
   children: React.ReactNode;
+  selectedWordIndex: number | null;
 }
 
 export function HeadlinePreview({
@@ -22,6 +23,7 @@ export function HeadlinePreview({
   onResetAnimation,
   onToggleLetterAnimation,
   children,
+  selectedWordIndex,
 }: HeadlinePreviewProps) {
   return (
     <motion.div
@@ -62,7 +64,14 @@ export function HeadlinePreview({
         </div>
       </div>
 
-      <div className="min-h-[200px] flex items-center justify-center">
+      <div className="min-h-[200px] flex items-center justify-center relative">
+        {selectedWordIndex !== null && (
+          <div className="absolute top-2 right-2 px-3 py-1 bg-blue-500/20 backdrop-blur-sm rounded-full border border-blue-400/30">
+            <span className="text-xs text-blue-300 font-medium">
+              Word Styling Active
+            </span>
+          </div>
+        )}
         <motion.div
           ref={headlineRef}
           key={isAnimating ? "animating" : "static"}
@@ -70,13 +79,19 @@ export function HeadlinePreview({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className={clsx(
-            "text-center cursor-pointer",
+            "text-center transition-all duration-300",
+            selectedWordIndex === null ? "cursor-text" : "cursor-default",
             settings.effects.hoverGlow &&
-              "hover:drop-shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300"
+              "hover:drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]"
           )}
-          contentEditable
+          contentEditable={selectedWordIndex === null}
           suppressContentEditableWarning
-          onBlur={(e) => onTextChange(e.target.textContent || "")}
+          onBlur={(e) => {
+            // Only update text if no word is selected to avoid losing word structure
+            if (selectedWordIndex === null) {
+              onTextChange(e.target.textContent || "");
+            }
+          }}
         >
           {children}
         </motion.div>

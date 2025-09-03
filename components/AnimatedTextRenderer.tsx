@@ -22,7 +22,7 @@ export function AnimatedTextRenderer({
 }: AnimatedTextRendererProps) {
   if (settings.effects.letterAnimation) {
     return (
-      <div style={getHeadlineStyle()}>
+      <div key={`animated-${animationKey}`} style={getHeadlineStyle()}>
         {words.map((word, wordIndex) => {
           const wordStyling = settings.wordStyling[wordIndex];
           const isGradientEnabled = settings.gradient.enabled;
@@ -77,11 +77,27 @@ export function AnimatedTextRenderer({
             wordStyles.textUnderlineOffset = "2px";
           }
 
-          // Important: For words with no styling, ensure they inherit properly
+          // Important: For words with only underline styling, ensure they inherit proper colors
+          if (
+            !wordStyling?.background &&
+            !wordStyling?.highlight &&
+            !wordStyling?.color &&
+            wordStyling?.underline
+          ) {
+            // If gradient is enabled globally, let the word inherit the gradient
+            if (isGradientEnabled) {
+              // Don't override anything, let it inherit from parent
+            } else {
+              // For non-gradient text, ensure the word has proper color
+              wordStyles.color = "inherit";
+            }
+          }
+          // Important: For words with no styling at all, ensure they inherit properly
           else if (
             !wordStyling?.background &&
             !wordStyling?.highlight &&
-            !wordStyling?.color
+            !wordStyling?.color &&
+            !wordStyling?.underline
           ) {
             // If gradient is enabled globally, let the word inherit the gradient
             if (isGradientEnabled) {
@@ -96,29 +112,44 @@ export function AnimatedTextRenderer({
             <span
               key={wordIndex}
               className={clsx(
-                "inline-block mr-3 cursor-pointer transition-all duration-200",
-                selectedWordIndex === wordIndex &&
-                  "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent"
+                "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1",
+                selectedWordIndex === wordIndex
+                  ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent bg-blue-500/10"
+                  : "hover:bg-white/10 hover:ring-1 hover:ring-white/30"
               )}
               style={wordStyles}
               onClick={() =>
                 onWordSelect(selectedWordIndex === wordIndex ? null : wordIndex)
               }
             >
-              {word.split("").map((letter, letterIndex) => (
-                <motion.span
-                  key={`${animationKey}-${wordIndex}-${letterIndex}`}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.5,
-                    delay: (wordIndex * word.length + letterIndex) * 0.05,
-                  }}
-                  className="inline-block"
-                >
-                  {letter}
-                </motion.span>
-              ))}
+              {word.split("").map((letter, letterIndex) => {
+                // Calculate total letters processed so far for proper sequencing
+                let totalLetterIndex = 0;
+                for (let i = 0; i < wordIndex; i++) {
+                  totalLetterIndex += words[i].length;
+                }
+                totalLetterIndex += letterIndex;
+
+                return (
+                  <motion.span
+                    key={`${animationKey}-${wordIndex}-${letterIndex}`}
+                    initial={{ opacity: 0, y: 50, scale: 0.8 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: {
+                        duration: 0.4,
+                        delay: totalLetterIndex * 0.03,
+                        ease: "easeOut",
+                      },
+                    }}
+                    className="inline-block"
+                  >
+                    {letter === " " ? "\u00A0" : letter}
+                  </motion.span>
+                );
+              })}
             </span>
           );
         })}
@@ -127,7 +158,7 @@ export function AnimatedTextRenderer({
   }
 
   return (
-    <div style={getHeadlineStyle()}>
+    <div key={`static-${animationKey}`} style={getHeadlineStyle()}>
       {words.map((word, index) => {
         const wordStyling = settings.wordStyling[index];
         const isGradientEnabled = settings.gradient.enabled;
@@ -183,11 +214,27 @@ export function AnimatedTextRenderer({
           wordStyles.textUnderlineOffset = "2px";
         }
 
-        // Important: For words with no styling, ensure they inherit properly
+        // Important: For words with only underline styling, ensure they inherit proper colors
+        if (
+          !wordStyling?.background &&
+          !wordStyling?.highlight &&
+          !wordStyling?.color &&
+          wordStyling?.underline
+        ) {
+          // If gradient is enabled globally, let the word inherit the gradient
+          if (isGradientEnabled) {
+            // Don't override anything, let it inherit from parent
+          } else {
+            // For non-gradient text, ensure the word has proper color
+            wordStyles.color = "inherit";
+          }
+        }
+        // Important: For words with no styling at all, ensure they inherit properly
         else if (
           !wordStyling?.background &&
           !wordStyling?.highlight &&
-          !wordStyling?.color
+          !wordStyling?.color &&
+          !wordStyling?.underline
         ) {
           // If gradient is enabled globally, let the word inherit the gradient
           if (isGradientEnabled) {
@@ -202,16 +249,17 @@ export function AnimatedTextRenderer({
           <motion.span
             key={index}
             className={clsx(
-              "inline-block mr-3 cursor-pointer transition-all duration-200",
-              selectedWordIndex === index &&
-                "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent"
+              "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1",
+              selectedWordIndex === index
+                ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent bg-blue-500/10"
+                : "hover:bg-white/10 hover:ring-1 hover:ring-white/30"
             )}
             style={wordStyles}
             onClick={() =>
               onWordSelect(selectedWordIndex === index ? null : index)
             }
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             {word}
           </motion.span>
