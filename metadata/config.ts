@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const baseMetadata: Metadata = {
-  metadataBase: new URL("https://headline-widget-creator.vercel.app"),
+  metadataBase: new URL("https://headline-widget.vercel.app"),
   title: {
     default: "Headline Widget Creator | Modern Typography Tool",
     template: "%s | Headline Widget Creator",
@@ -31,7 +31,7 @@ export const baseMetadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://headline-widget-creator.vercel.app",
+    url: "https://headline-widget.vercel.app",
     title: "Headline Widget Creator | Modern Typography Tool",
     description:
       "Create stunning, customizable headlines with modern effects, gradients, and animations. Perfect for web designers and developers.",
@@ -94,7 +94,7 @@ export const baseMetadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: "https://headline-widget-creator.vercel.app",
+    canonical: "https://headline-widget.vercel.app",
   },
   category: "technology",
   classification: "Design Tool",

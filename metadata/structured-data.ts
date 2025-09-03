@@ -4,7 +4,7 @@ export const structuredData = {
   name: "Headline Widget Creator",
   description:
     "Create stunning, customizable headlines with modern effects, gradients, and animations. Perfect for web designers and developers.",
-  url: "https://headline-widget-creator.vercel.app",
+  url: "https://headline-widget.vercel.app",
   applicationCategory: "DesignApplication",
   operatingSystem: "Web Browser",
   offers: {
@@ -21,8 +21,8 @@ export const structuredData = {
     "@type": "Organization",
     name: "Headline Widget Creator",
   },
-  image: "https://headline-widget-creator.vercel.app/og-image.png",
-  screenshot: "https://headline-widget-creator.vercel.app/screenshot-wide.png",
+  image: "https://headline-widget.vercel.app/og-image.png",
+  screenshot: "https://headline-widget.vercel.app/screenshot-wide.png",
   softwareVersion: "1.0.0",
   datePublished: "2025-09-03",
   dateModified: "2025-09-03",
@@ -36,8 +36,8 @@ export const structuredData = {
     "Modern effects",
   ],
   browserRequirements: "Requires modern web browser with JavaScript enabled",
-  downloadUrl: "https://headline-widget-creator.vercel.app",
-  installUrl: "https://headline-widget-creator.vercel.app",
+  downloadUrl: "https://headline-widget.vercel.app",
+  installUrl: "https://headline-widget.vercel.app",
 };
 
 export const breadcrumbStructuredData = {
@@ -48,7 +48,7 @@ export const breadcrumbStructuredData = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://headline-widget-creator.vercel.app",
+      item: "https://headline-widget.vercel.app",
     },
   ],
 };
@@ -57,12 +57,12 @@ export const websiteStructuredData = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Headline Widget Creator",
-  url: "https://headline-widget-creator.vercel.app",
+  url: "https://headline-widget.vercel.app",
   description:
     "Create stunning, customizable headlines with modern effects, gradients, and animations",
   potentialAction: {
     "@type": "SearchAction",
-    target: "https://headline-widget-creator.vercel.app?q={search_term_string}",
+    target: "https://headline-widget.vercel.app?q={search_term_string}",
     "query-input": "required name=search_term_string",
   },
 };

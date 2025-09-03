@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Headline Widget Creator",
-      url: "https://headline-widget-creator.vercel.app",
+      url: "https://headline-widget.vercel.app",
     },
   ],
   creator: "Headline Widget Creator",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://headline-widget-creator.vercel.app",
+    url: "https://headline-widget.vercel.app",
     title: "Headline Widget Creator | Modern Typography Tool",
     description:
       "Create stunning, customizable headlines with modern effects, gradients, and animations. Perfect for web designers and developers.",
