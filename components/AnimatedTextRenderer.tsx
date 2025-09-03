@@ -20,6 +20,10 @@ export function AnimatedTextRenderer({
   getHeadlineStyle,
   animationKey = 0,
 }: AnimatedTextRendererProps) {
+  // Simple word selection handler
+  const handleWordInteraction = (wordIndex: number) => {
+    onWordSelect(selectedWordIndex === wordIndex ? null : wordIndex);
+  };
   if (settings.effects.letterAnimation) {
     return (
       <div key={`animated-${animationKey}`} style={getHeadlineStyle()}>
@@ -112,16 +116,14 @@ export function AnimatedTextRenderer({
             <span
               key={wordIndex}
               className={clsx(
-                "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1",
+                "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1 select-none",
                 selectedWordIndex === wordIndex
                   ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent bg-blue-500/10"
                   : "hover:bg-white/5"
               )}
               style={wordStyles}
-              onDoubleClick={() =>
-                onWordSelect(selectedWordIndex === wordIndex ? null : wordIndex)
-              }
-              title="Double-click to style this word"
+              onClick={() => handleWordInteraction(wordIndex)}
+              title="Tap to style this word"
             >
               {word.split("").map((letter, letterIndex) => {
                 // Calculate total letters processed so far for proper sequencing
@@ -250,18 +252,16 @@ export function AnimatedTextRenderer({
           <motion.span
             key={index}
             className={clsx(
-              "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1",
+              "inline-block mr-3 cursor-pointer transition-all duration-200 rounded-md px-1 select-none",
               selectedWordIndex === index
                 ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-transparent bg-blue-500/10"
                 : "hover:bg-white/5"
             )}
             style={wordStyles}
-            onDoubleClick={() =>
-              onWordSelect(selectedWordIndex === index ? null : index)
-            }
+            onClick={() => handleWordInteraction(index)}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            title="Double-click to style this word"
+            title="Tap to style this word"
           >
             {word}
           </motion.span>
