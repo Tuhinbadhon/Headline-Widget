@@ -61,14 +61,39 @@ export default function HeadlineWidget() {
     setSettings((prev) => {
       const keys = path.split(".");
       const updated = { ...prev };
-      let current: Record<string, unknown> = updated as Record<string, unknown>;
+      let current: Record<string, unknown> | unknown[] = updated as Record<
+        string,
+        unknown
+      >;
 
       for (let i = 0; i < keys.length - 1; i++) {
-        current[keys[i]] = { ...(current[keys[i]] as Record<string, unknown>) };
-        current = current[keys[i]] as Record<string, unknown>;
+        const key = keys[i];
+        if (Array.isArray(current[key as keyof typeof current])) {
+          (current as Record<string, unknown>)[key] = [
+            ...(current[key as keyof typeof current] as unknown[]),
+          ];
+        } else {
+          (current as Record<string, unknown>)[key] = {
+            ...((current as Record<string, unknown>)[key] as Record<
+              string,
+              unknown
+            >),
+          };
+        }
+        current = (current as Record<string, unknown>)[key] as
+          | Record<string, unknown>
+          | unknown[];
       }
 
-      current[keys[keys.length - 1]] = value;
+      const lastKey = keys[keys.length - 1];
+      if (Array.isArray(current) && !isNaN(Number(lastKey))) {
+        // Handle array index updates
+        (current as unknown[])[Number(lastKey)] = value;
+      } else {
+        // Handle object property updates
+        (current as Record<string, unknown>)[lastKey] = value;
+      }
+
       return updated;
     });
   };
@@ -82,9 +107,14 @@ export default function HeadlineWidget() {
     };
 
     if (settings.gradient.enabled) {
+      // Ensure colors is an array and has at least one color
+      const colors = Array.isArray(settings.gradient.colors)
+        ? settings.gradient.colors
+        : ["#667eea", "#764ba2"];
+
       baseStyle.backgroundImage = `linear-gradient(${
         gradientDirections[settings.gradient.direction]
-      }, ${settings.gradient.colors.join(", ")})`;
+      }, ${colors.join(", ")})`;
       baseStyle.WebkitBackgroundClip = "text";
       baseStyle.WebkitTextFillColor = "transparent";
       baseStyle.backgroundClip = "text";
@@ -128,11 +158,16 @@ export default function HeadlineWidget() {
       settings.fontWeight
     }; ${
       settings.gradient.enabled
-        ? `background-image: linear-gradient(${
-            gradientDirections[settings.gradient.direction]
-          }, ${settings.gradient.colors.join(
-            ", "
-          )}); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`
+        ? (() => {
+            const colors = Array.isArray(settings.gradient.colors)
+              ? settings.gradient.colors
+              : ["#667eea", "#764ba2"];
+            return `background-image: linear-gradient(${
+              gradientDirections[settings.gradient.direction]
+            }, ${colors.join(
+              ", "
+            )}); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`;
+          })()
         : ""
     }">${settings.text}</div>`;
 
@@ -243,9 +278,14 @@ export default function HeadlineWidget() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 overflow-hidden"
+              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 relative"
             >
-              <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+              <div className="overflow-hidden rounded-2xl">
+                <TabNavigation
+                  activeTab={activeTab}
+                  onTabChange={setActiveTab}
+                />
+              </div>
 
               <div className="p-5">{renderTabContent()}</div>
             </motion.div>

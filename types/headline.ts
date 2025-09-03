@@ -48,7 +48,7 @@ export interface EffectSettings {
 
 export type GradientDirection = "right" | "left" | "down" | "up";
 export type FontWeight = "300" | "400" | "500" | "600" | "700" | "800";
-export type ColorPickerType = "color1" | "color2" | null;
+export type ColorPickerType = string | null;
 export type ActiveTab =
   | "presets"
   | "typography"
