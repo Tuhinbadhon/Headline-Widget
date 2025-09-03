@@ -82,7 +82,7 @@ export function WordStylingPanel({
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-      className="mt-6 p-6 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl"
+      className="mt-6 p-6 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl mx-auto w-full max-w-lg lg:max-w-xl xl:max-w-2xl"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -223,15 +223,44 @@ export function WordStylingPanel({
 
           {showColorPicker && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mt-4 p-3 bg-white rounded-xl shadow-xl border border-gray-200"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm"
+              onClick={() => setShowColorPicker(false)}
             >
-              <HexColorPicker
-                color={currentStyling.color || "#ffffff"}
-                onChange={updateColor}
-              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="relative w-[280px] max-w-sm p-5 bg-gradient-to-br from-white/70 to-white/30 
+                 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close button */}
+                <button
+                  onClick={() => setShowColorPicker(false)}
+                  className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center 
+                   rounded-full bg-white/50 hover:bg-white/80 border border-white/40 
+                   shadow-md backdrop-blur-md transition-all duration-300 group"
+                  title="Close color picker"
+                >
+                  <X className="w-5 h-5 text-gray-700 group-hover:rotate-90 group-hover:text-red-500 transition-all duration-300" />
+                </button>
+
+                {/* Title */}
+                <p className="mb-3 text-sm font-medium text-gray-700 text-center">
+                  🎨 Pick a Color
+                </p>
+
+                {/* Color Picker */}
+                <HexColorPicker
+                  color={currentStyling.color || "#ffffff"}
+                  onChange={updateColor}
+                  className="w-full"
+                />
+              </motion.div>
             </motion.div>
           )}
         </div>

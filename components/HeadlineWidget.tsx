@@ -222,7 +222,7 @@ export default function HeadlineWidget() {
               letterAnimation: false,
             },
           }));
-          setAnimationKey((current) => current + 1); // Force re-render when auto-stopping
+          setAnimationKey((current) => current + 1); 
           setAnimationTimer(null);
         }, totalAnimationTime);
 
