@@ -222,7 +222,7 @@ export default function HeadlineWidget() {
               letterAnimation: false,
             },
           }));
-          setAnimationKey((current) => current + 1); 
+          setAnimationKey((current) => current + 1);
           setAnimationTimer(null);
         }, totalAnimationTime);
 
@@ -284,7 +284,7 @@ export default function HeadlineWidget() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-violet-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
