@@ -35,6 +35,7 @@ export function HeadlinePreview({
           <button
             onClick={onResetAnimation}
             className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+            title="Refresh Animation"
           >
             <RefreshCw className="w-4 h-4 text-white" />
           </button>
@@ -46,6 +47,11 @@ export function HeadlinePreview({
                 ? "bg-blue-500 text-white"
                 : "bg-white/10 hover:bg-white/20 text-white"
             )}
+            title={
+              settings.effects.letterAnimation
+                ? "Pause Animation"
+                : "Play Animation"
+            }
           >
             {settings.effects.letterAnimation ? (
               <Pause className="w-4 h-4" />
